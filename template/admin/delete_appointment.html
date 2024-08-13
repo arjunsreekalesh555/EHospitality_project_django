@@ -1,0 +1,15 @@
+{% extends 'patient/index.html' %}
+{% block content %}
+
+
+<form action="" method="POST">
+  {% csrf_token %}
+
+  <h3>Are you sure to delete?</h3>
+
+  <input type="submit" value="Delete">
+  <a href="{% url 'appointment_details' %}" class="btn btn-secondary">Cancel</a>
+
+  {% endblock %}
+
+

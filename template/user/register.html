@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User register</title>
+  	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            background: linear-gradient(to right, #11998e, #38ef7d);
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background: #fff;
+            padding: 25px 30px;
+            border-radius: 5px;
+        }
+
+        .container .title {
+            font-size: 25px;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .container .title::before {
+            content: '';
+            position: absolute;
+            height: 3px;
+            left: 0;
+            width: 30px;
+            background: linear-gradient(to right, #11998e, #38ef7d);
+        }
+
+        .container form .user-details {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        form .user-details .input-box {
+            width: calc(100% / 2 - 20px);
+            margin-bottom: 15px;
+        }
+
+        .input-box span.details {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .input-box input {
+            height: 45px;
+            width: 100%;
+            outline: none;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            padding-left: 15px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .input-box input:focus,
+        .input-box input:valid {
+            border-color: #38ef7d;
+        }
+
+        .gender-details {
+            margin-bottom: 15px;
+        }
+
+        .gender-details .gender-title {
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .category {
+            display: flex;
+            width: 80%;
+            margin: 14px 0;
+            justify-content: space-between;
+        }
+
+        .category label {
+            display: flex;
+            align-items: center;
+        }
+
+        .category .dot-one,
+        .category .dot-two,
+        .category .dot-three {
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            margin-right: 10px;
+            background: #d9d9d9;
+            border: 5px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        #dot-1:checked~.category label .dot-one,
+        #dot-2:checked~.category label .dot-two,
+        #dot-3:checked~.category label .dot-three {
+            background: #38ef7d;
+            border-color: #d9d9d9;
+        }
+
+        .button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .button input {
+            height: 45px;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            background: linear-gradient(to right, #11998e, #38ef7d);
+            transition: all 0.3s ease;
+        }
+
+        .button input:hover {
+            background: linear-gradient(to right, #38ef7d, #11998e);
+        }
+        .alert-container {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            padding: 0 20px;
+            z-index: 1000;
+        }
+
+        .alert {
+            margin: 0 auto;
+            width: 100%;
+            max-width: 650px;
+        }
+    </style>
+</head>
+<body>
+    {% if messages %}
+        <div class="alert-container">
+            {% for message in messages %}
+                {% if 'password_mismatch' in message.tags %}
+                    <div class="alert alert-danger custom-alert alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endif %}
+
+                {% if 'username_exists' in message.tags %}
+                    <div class="alert alert-danger custom-alert alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+<div class="container">
+    <div class="title">REGISTRATION</div>
+    <form action="" method="POST">
+           {% csrf_token %}
+        <div class="user-details">
+            <div class="input-box">
+                <span class="details">Username</span>
+                <input type="text" placeholder="Enter your name.." name="username" required>
+            </div>
+            <div class="input-box">
+                <span class="details">Password</span>
+                <input type="password" placeholder="Enter your password.." name="password" required>
+            </div>
+            <div class="input-box">
+                <span class="details">Confirm password</span>
+                <input type="password" placeholder="Re-enter your password here.." name="password2" required>
+            </div>
+            <div class="input-box">
+                <span class="details">First name</span>
+                <input type="text" placeholder="Enter your first name.." name="first_name" required>
+            </div>
+            <div class="input-box">
+                <span class="details">Last name</span>
+                <input type="text" placeholder="Re-enter your last name.." name="last_name" required>
+            </div>
+                        <div class="input-box">
+                <span class="details">Full name</span>
+                <input type="text" placeholder="Enter you full name.." name="name" required>
+            </div>
+                        <div class="input-box">
+                <span class="details">Age</span>
+                <input type="number" placeholder="Enter your age.." name="age" required>
+            </div>
+                        <div class="input-box">
+                <span class="details">Date of birth</span>
+                <input type="date" placeholder="Enter your d.o.b.." name="date_of_birth" required>
+            </div>
+            <div class="input-box">
+                <span class="details">Email</span>
+                <input type="email" placeholder="Enter your email.." name="email" required>
+            </div>
+            <div class="input-box">
+                <span class="details">Address</span>
+                <input type="text" placeholder="Enter your address.." name="address" required>
+            </div>
+                        <div class="input-box">
+                <span class="details">mobile</span>
+                <input type="number" name="mobile" placeholder="Enter your phone number.." required>
+            </div>
+        </div>
+        <div class="gender-details">
+            <span class="gender-title">Gender</span>
+            <div class="category">
+                <input type="radio" name="gender" value="Male" id="dot-1">
+                <label for="dot-1">
+                    <span class="dot-one"></span>
+                    <span class="gender">Male</span>
+                </label>
+                <input type="radio" name="gender" value="Female" id="dot-2">
+                <label for="dot-2">
+                    <span class="dot-two"></span>
+                    <span class="gender">Female</span>
+                </label>
+                <input type="radio" name="gender" value="Prefer not to say" id="dot-3">
+                <label for="dot-3">
+                    <span class="dot-three"></span>
+                    <span class="gender">Prefer not to say</span>
+                </label>
+            </div>
+        </div>
+        <div class="button">
+            <input type="submit" value="Register">
+        </div>
+            <a href="{% url 'user_login' %}">Login if registered</a>
+               <script src="{% static 'js/scripts.js' %}"></script>
+    </form>
+</div>
+		<script>
+    $(document).ready(function() {
+        $('.custom-alert').addClass('show');
+
+        setTimeout(function() {
+            $('.custom-alert').removeClass('show');
+        }, 5000); // Hide after 5 seconds
+    });
+</script>
+</body>
+</html>
+

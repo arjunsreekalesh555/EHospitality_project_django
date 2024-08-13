@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Register</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to right, #56ab2f, #a8e063);
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background: #fff;
+            padding: 25px 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .title {
+            font-size: 25px;
+            font-weight: 600;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .title::before {
+            content: '';
+            position: absolute;
+            height: 3px;
+            width: 30px;
+            background: linear-gradient(to right, #56ab2f, #a8e063);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .user-details {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .input-box {
+            width: calc(50% - 10px);
+            margin-bottom: 15px;
+        }
+
+        .input-box span.details {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .input-box input,
+        .input-box select {
+            height: 45px;
+            width: 100%;
+            outline: none;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            padding-left: 15px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-box input:focus,
+        .input-box input:valid,
+        .input-box select:focus,
+        .input-box select:valid {
+            border-color: #38ef7d;
+        }
+
+        .gender-details {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .gender-title {
+            font-size: 20px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .category {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 14px;
+        }
+
+        .category label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .category .dot-one,
+        .category .dot-two,
+        .category .dot-three {
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            margin-right: 10px;
+            background: #d9d9d9;
+            border: 5px solid transparent;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+
+        #dot-1:checked ~ .category label .dot-one,
+        #dot-2:checked ~ .category label .dot-two,
+        #dot-3:checked ~ .category label .dot-three {
+            background: #38ef7d;
+            border-color: #d9d9d9;
+        }
+
+        .button {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .button input {
+            height: 45px;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            background: linear-gradient(to right, #56ab2f, #a8e063);
+            transition: background 0.3s ease;
+            cursor: pointer;
+        }
+
+        .button input:hover {
+            background: linear-gradient(to right, #3e8e41, #76c744);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .login-link a {
+            color: #56ab2f;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="title">Registration</div>
+    <form action="{% url 'doctor_register' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="user-details">
+            <div class="input-box">
+                <span class="details">Doctor Name</span>
+                <input type="text" placeholder="Enter doctor name" name="doctor" required>
+            </div>
+            <div class="input-box">
+                <span class="details">Specialization</span>
+                <select name="special" required>
+                    <option value="" disabled selected>Select your specialization</option>
+                    {% for department in departments %}
+                        <option value="{{ department.id }}">{{ department.department }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="input-box">
+                <span class="details">Phone Number</span>
+                <input type="number" placeholder="Enter phone number" name="mobile" required>
+            </div>
+            <div class="input-box">
+                <span class="details">Username</span>
+                <input type="text" placeholder="Enter username" name="username" required>
+            </div>
+            <div class="input-box">
+                <span class="details">Password</span>
+                <input type="password" placeholder="Enter your password" name="password" required>
+            </div>
+            <div class="input-box">
+                <span class="details">Confirm Password</span>
+                <input type="password" placeholder="Re-enter your password" name="password2" required>
+            </div>
+            <div class="input-box">
+                <span class="details">Qualification</span>
+                <input type="text" placeholder="Enter qualification" name="qualification" required>
+            </div>
+            <div class="input-box">
+                <span class="details">Experience</span>
+                <input type="text" placeholder="Enter experience" name="experience" required>
+            </div>
+            <div class="input-box">
+                <span class="details">Hospital Name</span>
+                <input type="text" placeholder="Enter hospital name" name="hospital" required>
+            </div>
+            <div class="input-box">
+                <span class="details">Profile Photo</span>
+                <input type="file" name="image" required>
+            </div>
+        </div>
+        <div class="gender-details">
+            <span class="gender-title">Gender</span>
+            <div class="category">
+                <input type="radio" name="gender" value="Male" id="dot-1">
+                <label for="dot-1">
+                    <span class="dot-one"></span>
+                    <span class="gender">Male</span>
+                </label>
+                <input type="radio" name="gender" value="Female" id="dot-2">
+                <label for="dot-2">
+                    <span class="dot-two"></span>
+                    <span class="gender">Female</span>
+                </label>
+                <input type="radio" name="gender" value="Prefer not to say" id="dot-3">
+                <label for="dot-3">
+                    <span class="dot-three"></span>
+                    <span class="gender">Prefer not to say</span>
+                </label>
+            </div>
+        </div>
+        <div class="button">
+            <input type="submit" value="Register">
+        </div>
+        <div class="login-link">
+            <a href="{% url 'doctor_login' %}">Login if registered</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

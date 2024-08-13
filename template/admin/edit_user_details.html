@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+	{% load static %}
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>ProClinic-Bootstrap4 Hospital Admin</title>
+	<!-- Fav  Icon Link -->
+	<link rel="shortcut icon" type="image/png" href="{% static 'images/fav.png' %}">
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<!-- themify icons CSS -->
+	<link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
+	<!-- Animations CSS -->
+	<link rel="stylesheet" href="{% static 'css/animate.css' %}">
+	<!-- Main CSS -->
+	<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+	<link rel="stylesheet" href="{% static 'css/green.css' %}" id="style_theme">
+	<link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+	<!-- morris charts -->
+	<link rel="stylesheet" href="{% static 'charts/css/morris.css' %}">
+	<!-- jvectormap -->
+	<link rel="stylesheet" href="{% static 'css/jquery-jvectormap.css' %}">
+    <script src="{% static 'js/modernizr.min.js' %}"></script>
+    <!-- data table -->
+	<link rel="stylesheet" href="https://cdn.datatables.net/2.1.0/css/dataTables.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.1.0/css/buttons.dataTables.css">
+	<script src="https://cdn.datatables.net/buttons/3.1.0/js/dataTables.buttons.js"></script>
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+	<script src="https://cdn.datatables.net/buttons/3.1.0/js/buttons.dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.1.0/js/buttons.html5.min.js"></script>
+    <!-- end data table -->
+	<style>
+					            .custom-container-width {
+            width: 100%; /* Full width */
+            max-width: 1140px; /* Bootstrap container max-width */
+            margin: 0 auto; /* Center align the container */
+        }
+                           .reduced-margin {
+            margin-top: 5px; /* Adjust this value as needed */
+        }
+	           .navbar.fixed-top {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+            #content {
+            margin-top: 80px; /* Adjust this value according to your navbar height */
+    }
+	</style>
+</head>
+
+<body>
+	<!-- Pre Loader -->
+	<div class="loading">
+		<div class="spinner">
+			<div class="double-bounce1"></div>
+			<div class="double-bounce2"></div>
+		</div>
+	</div>
+	<!--/Pre Loader -->
+	<!-- Color Changer -->
+	<div class="theme-settings" id="switcher">
+		<span class="theme-click">
+			<span class="ti-settings"></span>
+		</span>
+		<span class="theme-color theme-default theme-active" data-color="green"></span>
+		<span class="theme-color theme-blue" data-color="blue"></span>
+		<span class="theme-color theme-red" data-color="red"></span>
+		<span class="theme-color theme-violet" data-color="violet"></span>
+		<span class="theme-color theme-yellow" data-color="yellow"></span>
+	</div>
+	<!-- /Color Changer -->
+	<div class="wrapper">
+		<!-- Page Content -->
+		<div id="content">
+			<!-- Top Navigation -->
+			<div class="container top-brand">
+				<nav class="navbar navbar-default fixed-top">
+					<div class="navbar-header">
+						<div class="sidebar-header"> <a href="index.html"><img src="{% static 'images/logo-dark.png' %}" class="logo" alt="logo"></a>
+						</div>
+					</div>
+					<ul class="nav justify-content-end">
+						<li class="nav-item">
+							<a class="nav-link">
+								<span title="Fullscreen" class="ti-fullscreen fullscreen"></span>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="modal" data-target=".proclinic-modal-lg">
+								<span class="ti-search"></span>
+							</a>
+							<div class="modal fade proclinic-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+								<div class="modal-dialog modal-lorvens">
+									<div class="modal-content proclinic-box-shadow2">
+										<div class="modal-header">
+											<h5 class="modal-title">Search Patient/Doctor:</h5>
+											<span class="ti-close" data-dismiss="modal" aria-label="Close">
+											</span>
+										</div>
+										<div class="modal-body">
+											<form method="GET" action="{% url 'search_doctor' %}">
+												<div class="form-group">
+													<input type="text" class="form-control" id="search-term" name="q" placeholder="Type text here" value="{{ query }}">
+													<button type="submit" class="btn btn-lorvens proclinic-bg">
+														<span class="ti-location-arrow"></span> Search</button>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+							 aria-expanded="false">
+								<span class="ti-announcement"></span>
+							</a>
+							<div class="dropdown-menu proclinic-box-shadow2 notifications animated flipInY">
+								<h5>Notifications</h5>
+								<a class="dropdown-item" href="#">
+									<span class="ti-wheelchair"></span> New Patient Added</a>
+								<a class="dropdown-item" href="#">
+									<span class="ti-money"></span> Patient payment done</a>
+								<a class="dropdown-item" href="#">
+									<span class="ti-time"></span>Patient Appointment booked</a>
+								<a class="dropdown-item" href="#">
+									<span class="ti-wheelchair"></span> New Patient Added</a>
+							</div>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+							 aria-expanded="false">
+								<span class="ti-user"></span>
+							</a>
+							<div class="dropdown-menu proclinic-box-shadow2 profile animated flipInY">
+								<h5> Hello Staff!</h5>
+								<a class="dropdown-item" href="#">
+									<span class="ti-settings"></span> Settings</a>
+								<a class="dropdown-item" href="{% url 'doctor_login' %}">
+									<span class="ti-settings"></span> Doctor Page</a>
+								<a class="dropdown-item" href="{% url 'user_register' %}">
+									<span class="ti-settings"></span> User Page</a>
+								<a class="dropdown-item" href="#">
+									<span class="ti-help-alt"></span> Help</a>
+								{% if request.user.is_staff %}
+								<a class="dropdown-item" href="{% url 'admin_logout' %}">
+									<span class="ti-power-off"></span> Logout</a>
+								{% endif %}
+							</div>
+						</li>
+					</ul>
+
+				</nav>
+			</div>
+			<!-- /Top Navigation -->
+			<!-- Menu -->
+			<div class="container menu-nav">
+				<nav class="navbar navbar-expand-lg proclinic-bg text-white">
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+					 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="ti-menu text-white"></span>
+					</button>
+
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav mr-auto">
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'home' %}"><span class="ti-home"></span> Dashboard</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'pat_details' %}">
+									<span class="ti-wheelchair"></span> Patients</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'add_department' %}"><span class="ti-user"></span> Departments</a>
+							</li>
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+								 aria-expanded="false"><span class="ti-user"></span> Doctors</a>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="{% url 'doctor_register' %}">Add Doctor</a>
+									<a class="dropdown-item" href="{% url 'doctor_details' %}">All Doctors</a>
+
+								</div>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'manage_appointments' %}" role="button"><span class="ti-pencil-alt"></span>Appointments</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'view_prescriptions' %}"><span class="ti-money"></span> Prescriptions</a>
+							</li>
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+								 aria-expanded="false"><span class="ti-pencil-alt"></span> Health Resource</a>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="{% url 'add_health_resource' %}">Add Health Resource</a>
+									<a class="dropdown-item" href="{% url 'health_resource_details' %}">All Health Resource</a>
+
+								</div>
+							</li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<!-- /Menu -->
+
+<div class="container reduced-margin">
+    <div class="col-md-12">
+        <div class="widget-area-2 proclinic-box-shadow">
+            <h3 class="widget-title">Edit patient details</h3>
+            <form method="post">
+                {% csrf_token %}
+				<div class="form-group">
+               <label for="first_name">First Name:</label>
+              <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" required><br>
+                                    </div>
+				<div class="form-group">
+              <label for="last_name">Last Name:</label>
+              <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" required><br>
+                   </div>
+
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" name="name" class="form-control" value="{{ patient.patient }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="age">Age:</label>
+                    <input type="number" name="age" class="form-control" value="{{ patient.age }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="date_of_birth">Date of Birth:</label>
+                    <input type="date" name="date_of_birth" class="form-control" value="{{ patient.date_of_birth|date:'Y-m-d' }}" required>
+                </div>
+    <label for="gender">Gender:</label>
+    <select id="gender" name="gender" required>
+        <option value="male" {% if patient.gender == 'male' %}selected{% endif %}>Male</option>
+        <option value="female" {% if patient.gender == 'female' %}selected{% endif %}>Female</option>
+    </select><br>
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <textarea name="address" class="form-control" required>{{ patient.address }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="mobile">Mobile:</label>
+                    <input type="text" name="mobile" class="form-control" value="{{ patient.phone }}" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Update Details</button>
+				<button value='Back' class='btn btn-danger' onclick="history.back()">Back</button>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+            			<!--Copy Rights-->
+			<div class="container">
+				<div class="d-sm-flex justify-content-center">
+				  <span class="text-muted text-center d-block d-sm-inline-block">Copyright © 2018 <a href="http://www.konnectplugins.com/" target="_blank">konnectcode</a>. All rights reserved.</span>
+				</div>
+			</div>
+			<!-- /Copy Rights-->
+		</div>
+		<!-- /Page Content -->
+	</div>
+	<!-- Back to Top -->
+	<a id="back-to-top" href="#" class="back-to-top">
+		<span class="ti-angle-up"></span>
+	</a>
+	<!-- /Back to Top -->
+	<!-- Jquery Library-->
+	<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+	<!-- Popper Library-->
+	<script src="{% static 'js/popper.min.js' %}"></script>
+	<!-- Bootstrap Library-->
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<!-- morris charts -->
+	<script src="{% static 'charts/js/raphael-min.js' %}"></script>
+	<script src="{% static 'charts/js/morris.min.js' %}"></script>
+	<script src="{% static 'js/custom-morris.js' %}"></script>
+	<!-- Custom Script-->
+	<script src="{% static 'js/custom.js' %}"></script>
+</body>
+</html>

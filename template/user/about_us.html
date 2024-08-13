@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+	{% load static %}
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>ProClinic-Bootstrap4 Hospital Admin</title>
+	<!-- Fav  Icon Link -->
+	<link rel="shortcut icon" type="image/png" href="{% static 'images/fav.png' %}">
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<!-- themify icons CSS -->
+	<link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
+	<!-- Animations CSS -->
+	<link rel="stylesheet" href="{% static 'css/animate.css' %}">
+	<!-- Main CSS -->
+	<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+	<link rel="stylesheet" href="{% static 'css/green.css' %}" id="style_theme">
+	<link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+	<!-- morris charts -->
+	<link rel="stylesheet" href="{% static 'charts/css/morris.css' %}">
+	<!-- jvectormap -->
+	<link rel="stylesheet" href="{% static 'css/jquery-jvectormap.css' %}">
+    <script src="{% static 'js/modernizr.min.js' %}"></script>
+    <!-- data table -->
+	<link rel="stylesheet" href="https://cdn.datatables.net/2.1.0/css/dataTables.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.1.0/css/buttons.dataTables.css">
+	<script src="https://cdn.datatables.net/buttons/3.1.0/js/dataTables.buttons.js"></script>
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+	<script src="https://cdn.datatables.net/buttons/3.1.0/js/buttons.dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.1.0/js/buttons.html5.min.js"></script>
+    <!-- end data table -->
+
+<style>
+		        .navbar.fixed-top {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+                    #content {
+        margin-top: 80px; /* Adjust this value according to your navbar height */
+    }
+    .card {
+        height: 160px; /* Set a fixed height for the cards */
+        border: 1px solid #ddd; /* Light border */
+        border-radius: 8px; /* Rounded corners */
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow */
+        transition: transform 0.2s; /* Smooth transition for hover effect */
+    }
+
+    .card:hover {
+        transform: scale(1.05); /* Slightly enlarge card on hover */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhance shadow on hover */
+    }
+
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px; /* Add padding inside the card */
+    }
+
+    .card-title {
+        font-family: 'Arial', sans-serif; /* Font family for card titles */
+        font-weight: bold; /* Bold font for card titles */
+        font-size: 1.25rem; /* Font size for card titles */
+        color: #4CAF50; /* Light green text color for card titles */
+        margin-bottom: 0.5rem; /* Reduce margin bottom */
+    }
+
+    .card-text {
+        font-family: 'Arial', sans-serif; /* Font family for card text */
+        font-size: 1rem; /* Font size for card text */
+        color: #666; /* Text color for card text */
+        margin: 5px 0; /* Reduce margin */
+    }
+
+    .card-address .card-text, .card-hours .card-text {
+        margin: 2px 0; /* Reduce gap between texts in Office Address and Office Hours cards */
+    }
+
+</style>
+
+</head>
+
+<body>
+	<!-- Pre Loader -->
+	<div class="loading">
+		<div class="spinner">
+			<div class="double-bounce1"></div>
+			<div class="double-bounce2"></div>
+		</div>
+	</div>
+	<!--/Pre Loader -->
+	<!-- Color Changer -->
+	<div class="theme-settings" id="switcher">
+		<span class="theme-click">
+			<span class="ti-settings"></span>
+		</span>
+		<span class="theme-color theme-default theme-active" data-color="green"></span>
+		<span class="theme-color theme-blue" data-color="blue"></span>
+		<span class="theme-color theme-red" data-color="red"></span>
+		<span class="theme-color theme-violet" data-color="violet"></span>
+		<span class="theme-color theme-yellow" data-color="yellow"></span>
+	</div>
+	<!-- /Color Changer -->
+	<div class="wrapper">
+		<!-- Page Content -->
+		<div id="content">
+			<!-- Top Navigation -->
+			<div class="container top-brand">
+				<nav class="navbar navbar-default fixed-top">
+					<div class="navbar-header">
+						<div class="sidebar-header"> <a href="index.html"><img src="{% static 'images/logo-dark.png' %}" class="logo" alt="logo"></a>
+						</div>
+					</div>
+					<ul class="nav justify-content-end">
+						<li class="nav-item">
+							<a class="nav-link">
+								<span title="Fullscreen" class="ti-fullscreen fullscreen"></span>
+							</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+							 aria-expanded="false">
+								<span class="ti-announcement"></span>
+							</a>
+							<div class="dropdown-menu proclinic-box-shadow2 notifications animated flipInY">
+								<h5>Notifications</h5>
+								<a class="dropdown-item" href="#">
+									<span class="ti-wheelchair"></span> New Patient Added</a>
+								<a class="dropdown-item" href="#">
+									<span class="ti-money"></span> Patient payment done</a>
+								<a class="dropdown-item" href="#">
+									<span class="ti-time"></span>Patient Appointment booked</a>
+								<a class="dropdown-item" href="#">
+									<span class="ti-wheelchair"></span> New Patient Added</a>
+							</div>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+							 aria-expanded="false">
+								<span class="ti-user"></span>
+							</a>
+							<div class="dropdown-menu proclinic-box-shadow2 profile animated flipInY">
+								{% if user.is_authenticated %}
+								<h5>Hello {{ user.username }}!</h5>
+								{% endif %}
+								<a class="dropdown-item" href="#">
+									<span class="ti-settings"></span> Settings</a>
+								<a class="dropdown-item" href="#">
+									<span class="ti-help-alt"></span> Help</a>
+								{% if request.user.is_authenticated %}
+								<a class="dropdown-item" href="{% url 'user_logout' %}">
+									<span class="ti-power-off"></span> Logout</a>
+								{% endif %}
+							</div>
+						</li>
+					</ul>
+
+				</nav>
+			</div>
+			<!-- /Top Navigation -->
+
+			<!-- Menu -->
+			<div class="container menu-nav">
+				<nav class="navbar navbar-expand-lg proclinic-bg text-white">
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+					 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="ti-menu text-white"></span>
+					</button>
+
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav mr-auto">
+							<li class="nav-item ">
+								<a class="nav-link" href="{% url 'user_home' %}"><span class="ti-home"></span> Home</a>
+															<li class="nav-item dropdown">
+								<a class="nav-link" href="{% url 'about_us' %}"><span class="ti-money"></span> About Us</a>
+							</li>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="{% url 'home' %}">Home</a>
+								</div>
+							</li>
+							<li class="nav-item">
+                            <a class="nav-link" href="{% url 'user_details' %}"><span class="ti-user"></span>Patient details</a>
+                            </li>
+
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+								 aria-expanded="false"><span class="ti-user"></span> Doctors</a>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="{% url 'doctor_details_user' %}">All Doctors</a>
+									<a class="dropdown-item" href="{% url 'doctor_list' %}">Doctor list</a>
+								</div>
+							</li>
+
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+								 aria-expanded="false"><span class="ti-pencil-alt"></span> Appointments </a>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="{% url 'doctor_list_and_book_appointment' %}">Add Appointment</a>
+									<a class="dropdown-item" href="{% url 'user_appointment_list' %}">Appointment Status</a>
+								</div>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'patient_treatment_plan' patient.id %}"><span class="ti-money"></span> Treatment Plan's</a>
+							</li>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'users-health-resource-details' %}"><span class="ti-money"></span> Health Reseource</a>
+							</li>
+														<li class="nav-item">
+                            <a class="nav-link" href="{% url 'help_user_page' %}"><span class="ti-user"></span>Help</a>
+                            </li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<!-- /Menu -->
+
+
+    </div>
+</div>
+
+    </div>
+</div>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">About Us</h1>
+    <div class="row">
+        <!-- Contact Card -->
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Contact</h5>
+                    <p class="card-text">Phone: (123) 456-7890</p>
+                </div>
+            </div>
+        </div>
+        <!-- Send Email Card -->
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Send Email</h5>
+                    <p class="card-text">Email: info@hospital.com</p>
+                </div>
+            </div>
+        </div>
+        <!-- Office Address Card -->
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Office Address</h5>
+                    <p class="card-text">123 Hospital Street City, State, ZIP</p>
+                </div>
+            </div>
+        </div>
+        <!-- Office Hours Card -->
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Office Hours</h5>
+                    <p class="card-text">Mon-Fri: 9AM-5PM </br>
+						Sat: 10AM-3PM </br>
+						Sunday:Closed </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+			<!--Copy Rights-->
+			<div class="container">
+				<div class="d-sm-flex justify-content-center">
+				  <span class="text-muted text-center d-block d-sm-inline-block">Copyright © 2018 <a href="http://www.konnectplugins.com/" target="_blank">konnectcode</a>. All rights reserved.</span>
+				</div>
+			</div>
+			<!-- /Copy Rights-->
+		</div>
+		<!-- /Page Content -->
+	</div>
+	<!-- Back to Top -->
+	<a id="back-to-top" href="#" class="back-to-top">
+		<span class="ti-angle-up"></span>
+	</a>
+	<!-- /Back to Top -->
+	<!-- Jquery Library-->
+	<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+	<!-- Popper Library-->
+	<script src="{% static 'js/popper.min.js' %}"></script>
+	<!-- Bootstrap Library-->
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<!-- morris charts -->
+	<script src="{% static 'charts/js/raphael-min.js' %}"></script>
+	<script src="{% static 'charts/js/morris.min.js' %}"></script>
+	<script src="{% static 'js/custom-morris.js' %}"></script>
+	<!-- Custom Script-->
+	<script src="{% static 'js/custom.js' %}"></script>
+</body>
+</html>

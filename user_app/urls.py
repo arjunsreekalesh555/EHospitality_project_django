@@ -1,0 +1,31 @@
+from django.urls import path
+from . import views
+urlpatterns=[
+    path('about_us/', views.about_us, name='about_us'),
+    path('help/', views.help, name='help_user_page'),
+    path('user-register/', views.user_register, name='user_register'),
+    path('user-login/', views.user_login, name='user_login'),
+    path('user-logout/', views.user_logout, name='user_logout'),
+    path('user-home/', views.user_home, name='user_home'),
+    path('doctor-list/', views.doctor_list, name='doctor_list'),
+    path('user-appointment-details/<int:appointment_id>/', views.user_appointment_details, name='user_appointment_details'),
+    path('book-appointment/<int:doctor_id>/', views.book_appointment, name='book_appointment'),
+    path('user-details/', views.user_details, name='user_details'),
+    path('edit/', views.edit_user_details, name='edit_user_details'),
+    path('doctor-details/', views.doctor_details_user, name='doctor_details_user'),
+    path('doctor-details-list/', views.doctor_details_list, name='doctor_details_list'),
+    path('doctors/', views.doctor_list_and_book_appointment, name='doctor_list_and_book_appointment'),
+    path('appointments/', views.user_appointment_list, name='user_appointment_list'),
+    path('delete_appointment/<int:appointment_id>/', views.delete_appointment, name='delete_appointment'),
+    path('update_appointment/<int:appointment_id>/', views.update_appointment, name='update_appointment'),
+    path('patient-treatment_plan/<int:patient_id>/', views.patient_treatment_plan, name='patient_treatment_plan'),
+    path('checkout-session/', views.createCheckout, name='checkout_session'),
+    path('success/', views.success, name='success'),
+    path('cancel/', views.cancel, name='cancel'),
+    path('users-health-resource-details/', views.user_health_resource_details, name='users-health-resource-details'),
+    path('appoint/<int:doctor_id>/', views.appoint_doctor, name='appoint_doctor'),
+    path('search-doctors-from-list/', views.search_doctor_from_list, name='search_doctor_from_list'),
+    path('search-doctors/', views.search_doctors, name='search_doctors'),
+    path('payment-history/', views.payment_history, name='payment_history'),
+
+]
